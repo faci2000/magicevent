@@ -12,7 +12,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 
-
+def conf(HttpRequest,pk):
+    return render(HttpRequest, 'events/confirm.html',{'conf':pk})
 
 class EventsListView(APIView):
     def get(self,request,*args, **kwargs):
@@ -23,7 +24,7 @@ class EventsListView(APIView):
         form = ClientForm(request.POST)
         if form.is_valid():
             form.save()
-        context ={'form':form, 'events':Event.objects.all() }
+        context ={'form':form, 'events':Event.objects.filter(pk=pk)}
         return render(request,'events/events_list.html',context)
 
 
@@ -38,6 +39,14 @@ class EventList(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+# class ClientEvents(APIView):
+#     def post(self,request,format=None):
+#         serializer = ClientSerializer(data=request.data)
+#         if serializer.is_valid():
+#             return Response(serializer.data, status=status.HTTP_201_CREATED)
+#         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
 
 class EventDetail(APIView):
     def delete(self, request, pk, format=None):

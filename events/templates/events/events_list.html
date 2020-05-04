@@ -3,7 +3,12 @@
   <ul>
     {% for event in events %}
       <li>
-        <form action="sign/{{event.id}}/" method="post">
+        {% if not form %}
+        <form action="{{event.id}}/" method="post">
+        {%endif%}
+        {% if form %}
+        <form action="confirm/{{client.id}}/" method="post">
+        {%endif%}
             {% csrf_token %}
             {{ event.title }} {{event.start_date}} - {{event.end_date}} {{event.id}} 
             {% if not form %}
@@ -11,7 +16,7 @@
             {%endif%}
             {% if form %}
             <li>
-                {{form}}
+                {{form.as_table}}
             </li>
             <input type="submit" value="Confirm">
             {% endif %}
@@ -22,8 +27,3 @@
   {% else %}
     <p>There are no events.</p>
   {% endif %}       
-  <!-- <form action="/poll/add/" method="post">
-    {% csrf_token %}
-    {{ form }}
-    <input type="submit" value="Submit">
-</form> -->
