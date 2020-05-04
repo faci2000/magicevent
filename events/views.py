@@ -2,7 +2,7 @@ from django.shortcuts import render
 
 from .models import Event
 from .serializers import EventSerializer,ClientSerializer
-from .forms import ClientForm
+from .forms import ClientForm,ResignForm
 
 from django.shortcuts import render 
 from django.views.generic.list import ListView
@@ -18,7 +18,8 @@ def conf(HttpRequest,pk):
 class EventsListView(APIView):
     def get(self,request,*args, **kwargs):
         template_name='events/events_list.html'
-        context ={ 'events':Event.objects.all()}
+        form = ResignForm()
+        context ={ 'events':Event.objects.all(),'form':form}
         return render(request,template_name,context)
     def post(self,request, pk=None, *args, **kwargs):
         form = ClientForm(request.POST)

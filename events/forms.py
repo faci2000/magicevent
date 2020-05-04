@@ -11,10 +11,18 @@ def check(email):
 
 regex = '^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$'
 
+class ResignForm(ModelForm):
+    class Meta:
+        model = Client
+        fields = ['id',]
+
+
 class EventForm(ModelForm):
     class Meta:
         model = Event
         fields =['title','start_date','end_date','thumbnail',]
+
+
 
 
 class ClientForm(ModelForm):

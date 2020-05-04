@@ -24,6 +24,10 @@
       </li>
     {% endfor %}
   </ul>
+  <form action="resign/" method="delet">
+    {{form}}
+    <input type="submit" value="Sign up">
+  </form>
   {% else %}
     <p>There are no events.</p>
   {% endif %}       
